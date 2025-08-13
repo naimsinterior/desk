@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice Generator</title>
+  <!-- Select2 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+  <!-- jQuery (required) + Select2 JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .flex {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+       background-color: #881f29;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    .btn {
+      padding: 5px 10px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .summary {
+      margin-top: 20px;
+      max-width: 500px;
+      float: right;
+    }
+
+    .summary .form-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .distribution .form-group {
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="form-group">
+      <label for="docType">Select Document Type</label>
+      <select id="docType" onchange="updateLabels()">
+        <option value="Quote">Quote</option>
+        <option value="Sales Order">Sales Order</option>
+        <option value="Invoice">Invoice</option>
+      </select>
+    </div>
+
+    <div class="flex">
+      <div>
+        <div class="form-group">
+          <label for="clientName">Client Name</label>
+          <input type="text" id="customerName" placeholder="Client Name" required/>
+        </div>
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input type="text" id="customeraddress" placeholder="Customer Address" required/>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input type="text" id="customerMobile" placeholder="Customer Mobile" />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" id="customerEmail" placeholder="Customer Email" />
+        </div>
+      </div>
+      <div>
+        <div class="form-group">
+          <label id="docNumberLabel" id="userInput">Quote No.</label>
+          <input type="text" id="displayTypeno" placeholder="Type something..." />
+        </div>
+
+        <div class="form-group">
+          <label id="docDateLabel">Quote Date</label>
+          <input type="date" id="docDate" placeholder="Date" max="" />
+        </div>
+        <div class="form-group">
+          <label for="Designer1">Consultant/Designer</label>
+          <select id="Designer1" class="select3" required>
+            <option value="Ayush Razdan">Ayush Razdan</option>
+            <option value="Mustyak">Mustyak</option>
+            <option value="Suraj Mishra">Suraj Mishra</option>
+            <option value="Mohd. Zeeshan">Mohd. Zeeshan</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="placeOfSupply">Place of Supply</label>
+          <select id="placeOfSupply" class="select2" required>
+            <option value="">Select State</option>
+            <option value="Andhra Pradesh (37)">Andhra Pradesh (37)</option>
+            <option value="Arunachal Pradesh (12)">Arunachal Pradesh (12)</option>
+            <option value="Assam (18)">Assam (18)</option>
+            <option value="Bihar (10)">Bihar (10)</option>
+            <option value="Chattisgarh (22)">Chattisgarh (22)</option>
+            <option value="Delhi (07)">Delhi (07)</option>
+            <option value="Goa (30)">Goa (30)</option>
+            <option value="Gujarat (24)">Gujarat (24)</option>
+            <option value="Haryana (06)">Haryana (06)</option>
+            <option value="Himachal Pradesh (02)">Himachal Pradesh (02)</option>
+            <option value="Jammu & Kashmir (01)">Jammu & Kashmir (01)</option>
+            <option value="Jharkhand (20)">Jharkhand (20)</option>
+            <option value="Karnataka (29)">Karnataka (29)</option>
+            <option value="Kerala (32)">Kerala (32)</option>
+            <option value="Lakshadweep Islands (31)">Lakshadweep Islands (31)</option>
+            <option value="Madhya Pradesh (23)">Madhya Pradesh (23)</option>
+            <option value="Maharashtra (27)">Maharashtra (27)</option>
+            <option value="Manipur (14)">Manipur (14)</option>
+            <option value="Meghalaya (17)">Meghalaya (17)</option>
+            <option value="Mizoram (15)">Mizoram (15)</option>
+            <option value="Nagaland (13)">Nagaland (13)</option>
+            <option value="Odisha (21)">Odisha (21)</option>
+            <option value="Pondicherry (34)">Pondicherry (34)</option>
+            <option value="Punjab (03)">Punjab (03)</option>
+            <option value="Rajasthan (08)">Rajasthan (08)</option>
+            <option value="Sikkim (11)">Sikkim (11)</option>
+            <option value="Tamil Nadu (33)">Tamil Nadu (33)</option>
+            <option value="Telangana (36)">Telangana (36)</option>
+            <option value="Tripura (16)">Tripura (16)</option>
+            <option value="Uttar Pradesh (09)">Uttar Pradesh (09)</option>
+            <option value="Uttarakhand (05)">Uttarakhand (05)</option>
+            <option value="West Bengal (19)">West Bengal (19)</option>
+
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <table id="itemTable">
+      <thead>
+        <tr>
+          <th>Sr. No</th>
+          <th>Item</th>
+          <th>Description</th>
+          <th>Unit</th>
+          <th>Qty</th>
+          <th>Rate</th>
+          <th>Total</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="itemBody" class='select3'></tbody>
+    </table>
+    <button class="btn" onclick="addRow()">Add Row</button>
+    <div style="width: 30%; margin-top: 30px;">
+      <div>
+        <label for="Deliverytimeline">Delivery Timeline:</label>
+        <input type="text" id="deliverytimeline" placeholder="Deliverytimeline" />
+      </div>
+      <div>
+        <label for="Warranty">Warranty & Maintenance:</label>
+        <input type="text" id="warranty" placeholder="Warranty" />
+      </div>
+    </div>
+
+    <div class="summary">
+      <div class="form-group">
+        <label>Subtotal:</label>
+        <span id="subtotal">0.00</span>
+      </div>
+      <div class="form-group">
+        <label>Discount (%):</label>
+        <input type="number" id="discount" value="0" oninput="calculateTotals()">
+      </div>
+      <div class="form-group">
+        <label>Discount Amount:</label>
+        <span id="discountAmount">0.00</span>
+      </div>
+      <div class="form-group">
+        <label>GST %:</label>
+        <select id="gst" onchange="calculateTotals()">
+          <option value="GST not included.">GST not included.</option>  
+          <option value="0">0%</option>
+          <option value="5">5%</option>
+          <option value="12">12%</option>
+          <option value="18" selected>18%</option>
+          <option value="28">28%</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Grand Total:</label>
+        <span id="grandTotal">0.00</span>
+      </div>
+
+      <div class="distribution">
+        <div class="form-group">
+          <label>5% Advance:</label>
+          <span id="advance">0.00</span>
+        </div>
+        <div class="form-group">
+          <label>40% Designing Phase:</label>
+          <span id="designing">0.00</span>
+        </div>
+        <div class="form-group">
+          <label>40% Making Phase:</label>
+          <span id="making">0.00</span>
+        </div>
+        <div class="form-group">
+          <label>15% Handover Phase:</label>
+          <span id="handover">0.00</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <button id="updateButton" onclick="saveAndNext()" target="_blank" style="text-align: center;">Submit</button>
+  <script>
+  function updateLabels() {
+    const docType = document.getElementById("docType").value;
+    document.getElementById("docNumberLabel").innerText = docType + " No.";
+    document.getElementById("docDateLabel").innerText = docType + " Date";
+  }
+
+  function restrictFutureDates() {
+    const dateInput = document.getElementById("docDate");
+    const today = new Date().toISOString().split("T")[0];
+    dateInput.setAttribute("max", today);
+
+    dateInput.addEventListener("change", () => {
+      if (dateInput.value > today) {
+        alert("Future dates are not allowed.");
+        dateInput.value = today;
+      }
+    });
+  }
+
+  let rowCount = 0;
+
+  function addRow() {
+    rowCount++;
+    const tableBody = document.getElementById("itemBody");
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${rowCount}</td>
+      <td><input type="text" oninput="calculateTotals()"></td>
+      <td><input type="text" oninput="calculateTotals()"></td>
+      <td>
+        <select onchange="calculateTotals()">
+          <option value="sqft">sqft</option>
+          <option value="kg">kg</option>
+          <option value="hr (hour)">hr (hour)</option>
+          <option value="pcs">pcs</option>
+          <option value="feet">feet</option>
+          <option value="unit">unit</option>
+        </select>
+      </td>
+      <td><input type="number" value="0" onblur="roundQtyInput(this)" oninput="calculateTotals()"></td>
+      <td><input type="number" value="0" oninput="calculateTotals()"></td>
+      <td class="total">0.00</td>
+      <td>
+        <button onclick="moveUp(this)">↑</button>
+        <button onclick="moveDown(this)">↓</button>
+        <button onclick="deleteRow(this)">Delete</button>
+      </td>
+    `;
+    tableBody.appendChild(row);
+    updateRowNumbers();
+    calculateTotals();
+  }
+
+  function moveUp(button) {
+    const row = button.closest("tr");
+    const previous = row.previousElementSibling;
+    if (previous) {
+      row.parentNode.insertBefore(row, previous);
+      updateRowNumbers();
+      calculateTotals();
+    }
+  }
+
+  function moveDown(button) {
+    const row = button.closest("tr");
+    const next = row.nextElementSibling;
+    if (next) {
+      row.parentNode.insertBefore(next, row);
+      updateRowNumbers();
+      calculateTotals();
+    }
+  }
+
+  function deleteRow(btn) {
+    btn.closest("tr").remove();
+    updateRowNumbers();
+    calculateTotals();
+  }
+
+  function updateRowNumbers() {
+    const rows = document.querySelectorAll("#itemBody tr");
+    rowCount = 0;
+    rows.forEach((row, index) => {
+      rowCount++;
+      row.cells[0].innerText = rowCount;
+    });
+  }
+
+  function roundQtyInput(input) {
+    const value = parseFloat(input.value);
+    if (!isNaN(value)) {
+      input.value = Math.round(value);
+      calculateTotals();
+    }
+  }
+
+  function calculateTotals() {
+    const rows = document.querySelectorAll("#itemBody tr");
+    let subtotal = 0;
+    rows.forEach(row => {
+      const qty = parseFloat(row.cells[4].querySelector("input").value) || 0;
+      const rate = parseFloat(row.cells[5].querySelector("input").value) || 0;
+      const total = qty * rate;
+      row.cells[6].innerText = total.toFixed(2);
+      subtotal += total;
+    });
+    document.getElementById("subtotal").innerText = subtotal.toFixed(2);
+
+    const discountPercent = parseFloat(document.getElementById("discount").value) || 0;
+    const discountAmount = subtotal * discountPercent / 100;
+    document.getElementById("discountAmount").innerText = discountAmount.toFixed(2);
+
+    const gst = parseFloat(document.getElementById("gst").value) || 0;
+    const discountedTotal = subtotal - discountAmount;
+    const gstAmount = discountedTotal * gst / 100;
+    const grandTotal = discountedTotal + gstAmount;
+
+    document.getElementById("grandTotal").innerText = grandTotal.toFixed(2);
+    document.getElementById("advance").innerText = (grandTotal * 0.05).toFixed(2);
+    document.getElementById("designing").innerText = (grandTotal * 0.40).toFixed(2);
+    document.getElementById("making").innerText = (grandTotal * 0.40).toFixed(2);
+    document.getElementById("handover").innerText = (grandTotal * 0.15).toFixed(2);
+  }
+
+  function saveAndNext() {
+    const rows = document.querySelectorAll('#itemBody tr');
+    let data = [];
+
+    rows.forEach((row, index) => {
+      const cells = row.querySelectorAll('td');
+      const inputs = row.querySelectorAll('input');
+      const select = row.querySelector('select');
+      const total = row.querySelector('.total');
+
+      const rowData = {
+        srno: index + 1,
+        item: inputs[0].value,
+        description: inputs[1].value,
+        unit: select.value,
+        qty: inputs[2].value,
+        rate: inputs[3].value,
+        total: total.textContent.trim(),
+        action: 'Delete'
+      };
+
+      data.push(rowData);
+    });
+
+    localStorage.setItem('userData', JSON.stringify(data));
+    
+     // Redirect based on selected doc type
+      const docType = document.getElementById("docType").value;
+      if (docType === 'Quote') {
+        window.location.href = 'recipt.html';
+      } else if (docType === 'Sales Order') {
+        window.location.href = 'sales-order.html';
+      } else if (docType === 'Invoice') {
+        window.location.href = 'invoice.html';
+      } else {
+        alert("Unknown document type.");
+      }
+    }
+
+  $(document).ready(function () {
+    $('#placeOfSupply').select2({
+      placeholder: "Select State",
+      allowClear: true
+    });
+  });
+  
+
+  window.onload = () => {
+    restrictFutureDates();
+    addRow();
+  };
+</script>
+
+  <script>
+
+    const customerName = document.getElementById('customerName');
+    const customerMobile = document.getElementById('customerMobile');
+    const customerEmail = document.getElementById('customerEmail');
+    const customeraddress = document.getElementById('customeraddress');
+    const Designer1 = document.getElementById('Designer1');
+    const placeOfSupply = document.getElementById('placeOfSupply');
+    const gst = document.getElementById('gst');
+    const docType = document.getElementById('docType');
+    const docDate = document.getElementById('docDate');
+    const displayTypeno = document.getElementById('displayTypeno');
+    const grandTotal = document.getElementById('grandTotal');
+    const advance = document.getElementById('advance');
+    const designing = document.getElementById('designing');
+    const making = document.getElementById('making');
+    const handover = document.getElementById('handover');
+    const discount = document.getElementById('discount');
+    const discountAmount = document.getElementById('discountAmount');
+    const subtotal = document.getElementById('subtotal');
+    const deliverytimeline = document.getElementById('deliverytimeline');
+    const updateButton = document.getElementById('updateButton');
+    const warranty = document.getElementById('warranty');
+
+    // Load existing input from local storage
+    customerName.value = localStorage.getItem('customerName') || '';
+    customerMobile.value = localStorage.getItem('customerMobile') || '';
+    customerEmail.value = localStorage.getItem('customerEmail') || '';
+    customeraddress.value = localStorage.getItem('customeraddress') || '';
+    Designer1.value = localStorage.getItem('Designer1') || '';
+    placeOfSupply.value = localStorage.getItem('placeOfSupply') || '';
+    gst.value = localStorage.getItem('gst') || '';
+    docType.value = localStorage.getItem('docType') || '';
+    docDate.value = localStorage.getItem('docDate') || '';
+    displayTypeno.value = localStorage.getItem('displayTypeno') || '';
+    discount.value = localStorage.getItem('discount') || '';
+    grandTotal.textContent = localStorage.getItem('grandTotal') || '';
+    advance.textContent = localStorage.getItem('advance') || '';
+    designing.textContent = localStorage.getItem('designing') || '';
+    making.textContent = localStorage.getItem('making') || '';
+    handover.textContent = localStorage.getItem('handover') || '';
+    discountAmount.textContent = localStorage.getItem('discountAmount') || '';
+    subtotal.textContent = localStorage.getItem('subtotal') || '';
+    deliverytimeline.value = localStorage.getItem('deliverytimeline') || '';
+    warranty.value = localStorage.getItem('warranty') || '';
+
+
+
+
+    // Update local storage and navigate to the second page
+    updateButton.addEventListener('click', () => {
+      localStorage.setItem('customerName', customerName.value);
+      localStorage.setItem('customerMobile', customerMobile.value);
+      localStorage.setItem('customerEmail', customerEmail.value);
+      localStorage.setItem('customeraddress', customeraddress.value);
+      localStorage.setItem('Designer1', Designer1.value);
+      localStorage.setItem('placeOfSupply', placeOfSupply.value);
+      localStorage.setItem('gst', gst.value);
+      localStorage.setItem('docType', docType.value);
+      localStorage.setItem('docDate', docDate.value);
+      localStorage.setItem('displayTypeno', displayTypeno.value);
+      localStorage.setItem('grandTotal', grandTotal.textContent);
+      localStorage.setItem('advance', advance.textContent);
+      localStorage.setItem('designing', designing.textContent);
+      localStorage.setItem('making', making.textContent);
+      localStorage.setItem('handover', handover.textContent);
+      localStorage.setItem('discountAmount', discountAmount.textContent);
+      localStorage.setItem('discount', discount.value);
+      localStorage.setItem('subtotal', subtotal.textContent);
+      localStorage.setItem('deliverytimeline', deliverytimeline.value);
+      localStorage.setItem('warranty', warranty.value);
+
+      window.location.href = 'recipt.html';
+    });
+     window.location.href = 'sales-order.html';
+    });
+    window.location.href = 'invoice.html';
+    });
+
+    // Update local storage on input change
+    customerName.addEventListener('input', () => {
+      localStorage.setItem('customerName', customerName.value);
+    });
+    customerMobile.addEventListener('input', () => {
+      localStorage.setItem('customerMobile', customerMobile.value);
+    });
+    customerEmail.addEventListener('input', () => {
+      localStorage.setItem('customerEmail', customerEmail.value);
+    });
+    customeraddress.addEventListener('input', () => {
+      localStorage.setItem('customeraddress', customeraddress.value);
+    });
+    docType.addEventListener('input', () => {
+      localStorage.setItem('docType', docType.value);
+    });
+    Designer1.addEventListener('input', () => {
+      localStorage.setItem('Designer1', Designer1.value);
+    });
+    placeOfSupply.addEventListener('input', () => {
+      localStorage.setItem('placeOfSupply', placeOfSupply.value);
+    });
+    gst.addEventListener('input', () => {
+      localStorage.setItem('gst', gst.value);
+    });
+    customerEmail.addEventListener('input', () => {
+      localStorage.setItem('docDate', docDate.value);
+    });
+    displayTypeno.addEventListener('input', () => {
+      localStorage.setItem('displayTypeno', displayTypeno.value);
+    });
+    grandTotal.addEventListener('input', () => {
+      localStorage.setItem('grandTotal', grandTotal.textContent);
+    });
+    advance.addEventListener('input', () => {
+      localStorage.setItem('advance', advance.textContent);
+    });
+    designing.addEventListener('input', () => {
+      localStorage.setItem('designing', designing.textContent);
+    });
+    making.addEventListener('input', () => {
+      localStorage.setItem('making', making.textContent);
+    });
+    handover.addEventListener('input', () => {
+      localStorage.setItem('handover', handover.textContent);
+    });
+    discount.addEventListener('input', () => {
+      localStorage.setItem('discount', discount.value);
+    });
+    discountAmount.addEventListener('input', () => {
+      localStorage.setItem('discountAmount', discountAmount.textContent);
+    });
+    subtotal.addEventListener('input', () => {
+      localStorage.setItem('subtotal', subtotal.textContent);
+    });
+    deliverytimeline.addEventListener('input', () => {
+      localStorage.setItem('deliverytimeline', deliverytimeline.value);
+    });
+    warranty.addEventListener('input', () => {
+      localStorage.setItem('warranty', warranty.value);
+    });
+
+
+  </script>
+</body>
+
+</html>

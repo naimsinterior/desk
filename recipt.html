@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elegant Invoice - NAIMS INTERIOR</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+   @media print {
+  button.download-btn,
+  button[onclick="goBack()"] {
+    display: none !important;
+  }
+
+  .colored-section {
+    background-color: #3498db !important;
+    color: white !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+    </style>
+</head>
+
+<body>
+    <div id="invoice" class="invoice">
+        <div class="company-logo">
+            <img src="/images/logo1.png" alt="Company logo" class="logo" />
+            <img src="/images/design-of-page.png" alt="design-of-page" />
+        </div>
+        <div class="top-wave">
+            <h1 id="docType"></h1>
+            <div class="info">
+                <div class="left">
+                    <strong>NAIMS ENTERPRISES PRIVATE LIMITED</strong><br>
+                    H 77, Silai Bara Gaon, Milak, Rampur, Uttar Pradesh 244701<br>
+                    GSTIN: 09AAJCN0974G1Z7<br>
+                    CIN: U74102UP2023PTC188143<br>
+                    Toll Free: 1800 120 8230<br>
+                    Place of Supply: <span id="placeOfSupply"></span><br>
+                    Consultant/Designer: <span id="Designer1"></span>
+                </div>
+                <div class="right">
+                    <strong id="docTypelable"></strong>
+                    <div id="displayTypeno"></div>
+                    <strong>Date:</strong> <span id="docDate"></span><br>
+                    <strong>To:</strong>
+                    <p><strong>Customer Name:</strong> <span id="displayName"></span></p>
+                    <p><strong>Customer Mobile Number:</strong> <span id="displayMobile"></span></p>
+                    <p><strong>Customer Email:</strong> <span id="displayEmail"></span></p>
+                    <p><strong>Customer Address:</strong> <span id="displayaddress"></span></p>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Items</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>NO</th>
+                        <th>ITEM</th>
+                        <th>DESCRIPTION</th>
+                        <th>TYPE</th>
+                        <th>QTY</th>
+                        <th>RATE</th>
+                        <th>TOTAL</th>
+                    
+                    </tr>
+                </thead>
+                <tbody id="invoiceBody">
+                    
+                </tbody>
+
+            </table>
+
+            <div class="totals">
+                <table>
+                    <tr>
+                        <td>Subtotal:</td>
+                        <td id="subtotal">0</td>
+                    </tr>
+                    <tr>
+                        <td>GST%</td>
+                        <td id="gstper">0</td>
+                    </tr>
+                    <tr>
+                        <td>Discount: <span id="discount"></span>%</td>
+                        <td id="discountAmount">0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GRAND TOTAL:</strong></td>
+                        <td id="grandTotal"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="clear: both; padding-top: 40px;">
+                <div class="breakdown">
+                    <div>
+                        <h3>Payment Terms Breakdown</h3>
+                        <p>5% Booking Advance: ₹<span id="advance"></span></p>
+                        <p>40% Factory Production: ₹<span id="designing"></span></p>
+                        <p>40% Material Shift: ₹<span id="making"></span></p>
+                        <p>15% Handover: ₹<span id="handover"></span></p>
+                    </div>
+                    <div class="qr-code">
+                        <img  src="images/Qr-code.png" alt="NAIMS UPI QR Code">
+                        <p style="text-align:center; font-size: 12px; margin-top: 5px;">Pay via UPI</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="padding-top: 30px;">
+                <p><strong>Estimate Amount in Words:</strong><br><span id="amountWords"></span></p>
+                <p><strong>Bank Details:</strong><br>
+                    Bank Name: HDFC BANK<br>
+                    A/C No: 50200083353168<br>
+                    IFSC: HDFC0006355<br>
+                    Account Holder: NAIMS ENTERPRISES PRIVATE LIMITED
+                </p>
+            </div>
+            <div style="line-height: 0.5;">
+                <h3>Terms & Conditions:</h3>
+                <p>The above rates are subject to material selection and site conditions.</p>
+                <p>Any changes in design or additional work will be charged separately</p>
+                <p>Delivery timeline: <span id="deliverytimeline"></span></p>
+                <p>Warranty & Maintenance:<span id="warranty"></span>T&C Apply</p>
+            </div>
+        </div>
+
+        <div class="signature">
+            For: NAIMS ENTERPRISES PRIVATE LIMITED<br><br><br>
+            Authorized Signatory
+        </div>
+        <div class="foorter1"></div>
+
+        <div class="footer">
+            Thank you for choosing us to transform your space – your vision, our design.<br>
+            <strong>GSTIN:</strong> 09AAJCN0974G1Z7   |    <strong>CIN:</strong>  U74102UP2023PTC188143<br>
+            <strong>Reg. Office:</strong> H 77, Silai Bara Gaon, Milak, Rampur, UP 244701<br>
+            <strong>Branches:</strong> Awfis Noida Sector 62, Awfis OMR Chennai, Orchid Center Gurugram
+        </div>
+    </div>
+
+    <button class="download-btn" onclick="window.print()">Print Invoice</button>
+    
+
+    <script src="/javascript/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        
+        const storedData = JSON.parse(localStorage.getItem('userData')) || [];
+        const tbody = document.getElementById('invoiceBody');
+
+        storedData.forEach(user => {
+            const row = document.createElement('tr');
+            row.innerHTML= `
+            <td>${user.srno}</td>
+            <td>${user.item}</td>
+            <td>${user.description}</td>
+            <td>${user.unit}</td>
+            <td>${user.qty}</td>
+            <td>${user.rate}</td>
+            <td>${user.total}</td>
+            
+            `;
+            tbody.appendChild(row);
+            
+        });
+
+
+        const displayName = document.getElementById('displayName');
+        const displayMobile = document.getElementById('displayMobile');
+        const displayEmail = document.getElementById('displayEmail');
+        const displayaddress = document.getElementById('displayaddress');
+        const displaydocDate = document.getElementById('docDate');
+        const Designer1 = document.getElementById('Designer1');
+        const placeOfSupply = document.getElementById('placeOfSupply');
+        const gstper = document.getElementById('gstper');
+        const docType = document.getElementById('docType');
+        const displayTypeno = document.getElementById('displayTypeno');
+        const docTypelable = document.getElementById('docTypelable');
+        const grandTotal = document.getElementById('grandTotal');
+        const advance = document.getElementById('advance');
+        const making = document.getElementById('making');
+        const handover = document.getElementById('handover');
+        const designing = document.getElementById('designing');
+        const discount = document.getElementById('discount');
+        const discountAmount = document.getElementById('discountAmount');
+        const subtotal = document.getElementById('subtotal');
+        const deliverytimeline = document.getElementById('deliverytimeline');
+        const warranty = document.getElementById('warranty');
+       
+       
+
+        // Function to update the displayed input
+        function updateDisplay() {
+            displayName.textContent = localStorage.getItem('customerName') || 'No name provided.';
+            displayMobile.textContent = localStorage.getItem('customerMobile') || 'No mobile number provided.';
+            displayEmail.textContent = localStorage.getItem('customerEmail') || 'No email provided.';
+            displayaddress.textContent = localStorage.getItem('customeraddress') || 'No address provided.';
+            displaydocDate.textContent = localStorage.getItem('docDate') || 'No date provided.';
+            docType.textContent = localStorage.getItem('docType') || 'No date provided.';
+            docTypelable.textContent = localStorage.getItem('docType') || 'No date provided.';
+            Designer1.textContent = localStorage.getItem('Designer1') || 'No date provided.';
+            placeOfSupply.textContent = localStorage.getItem('placeOfSupply') || 'No date provided.';
+            gstper.textContent = localStorage.getItem('gst') || 'GST not included.';
+            displayTypeno.textContent = localStorage.getItem('displayTypeno') || 'No date provided.';            
+            grandTotal.textContent = localStorage.getItem('grandTotal') || 'No date provided.';            
+            advance.textContent = localStorage.getItem('advance') || 'No date provided.';            
+            designing.textContent = localStorage.getItem('designing') || 'No date provided.';            
+            making.textContent = localStorage.getItem('making') || 'No date provided.';            
+            handover.textContent = localStorage.getItem('handover') || 'No date provided.';            
+            discount.textContent = localStorage.getItem('discount') || 'No date provided.';            
+            discountAmount.textContent = localStorage.getItem('discountAmount') || 'No date provided.';            
+            subtotal.textContent = localStorage.getItem('subtotal') || 'No date provided.';            
+            deliverytimeline.textContent = localStorage.getItem('deliverytimeline') || 'No date provided.';            
+            warranty.textContent = localStorage.getItem('warranty') || 'No date provided.'; 
+	    document.title = `Elegant Invoice - ${customerName}`;           
+        }
+
+        // Call the function to update the display
+        updateDisplay();
+
+       
+
+        // Optional: Update display in real-time
+        setInterval(updateDisplay, 500); // Update every 500ms
+    </script>
+</body>
+
+</html>
