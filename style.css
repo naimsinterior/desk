@@ -1,0 +1,172 @@
+
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f6fb;
+}
+
+.qtyinput {
+    width: 30px;
+}
+
+.company-logo {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    padding: 0px 30px ;
+
+}
+
+.logo {
+    width: 150px;
+    /* height: 100%; */
+    padding: 30px;
+}
+
+.invoice {
+    max-width: 900px;
+    margin: 30px auto;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* padding-bottom: 30px; */
+}
+
+.top-wave {
+    /* background: linear-gradient(135deg, #1f3c88 0%, #4066c9 100%); */
+    /* color: white; */
+    padding: 30px;
+}
+
+.top-wave h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+.top-wave .info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.info .left,
+.info .right {
+    width: 48%;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.section {
+    padding: 20px 30px;
+}
+
+.section h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th,
+table td {
+    border: 1px solid #d3d3d3;
+    padding: 10px;
+    text-align: center;
+}
+
+table th {
+    background-color: #881f29;
+    color: white;
+}
+
+.totals {
+    margin-top: 20px;
+    float: right;
+    width: 300px;
+}
+
+.totals table {
+    border: none;
+}
+
+.totals td {
+    border: none;
+    padding: 6px 10px;
+    text-align: right;
+}
+.foorter1 {
+    width: 100%;
+    height: 3px;
+    text-align: center;
+    background: #4ebbdd;
+}
+.footer {
+    padding: 20px 30px;
+    background-color: #881f29;
+    font-size: 14px;
+    color: #f8f9fa;
+    text-align: center;
+}
+
+/* .invoice {
+    background-image: url(/images/design-of-page.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    
+} */
+.footer-logo {
+    transform: rotate(180deg);
+}
+
+.signature {
+    text-align: right;
+    padding: 30px;
+    font-style: italic;
+}
+
+.breakdown {
+    margin-top: 30px;
+    background: #eef3fa;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.qr-code img {
+    width: 120px;
+    height: 120px;
+    border: 1px solid #ccc;
+}
+
+.download-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #1f3c88;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+@media print {
+    body {
+        background: white;
+    }
+
+    .download-btn {
+        display: none;
+    }
+}
